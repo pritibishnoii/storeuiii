@@ -62,6 +62,8 @@ const Product = () => {
     }
   };
 
+
+  // console.log( product )
   return (
     <>
       <div>

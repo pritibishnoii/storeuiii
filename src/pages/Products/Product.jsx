@@ -2,14 +2,16 @@ import { Link } from "react-router-dom";
 import HeartIcon from "./HeartIcon";
 
 const Product = ( { product } ) => {
-  //   console.log("product component -->", product);
+  // console.log( "product component -->", product );
+  console.log( product.image )
   return (
     <>
       <div className="w-[30rem] ml-[2rem] p-3 relative">
         <div className="relative">
           <img
-            src={ product.image }
-            alt={ product.name }
+            src={ product?.image }
+            // src="https://res.cloudinary.com/dldv1fsjw/image/upload/v1752256461/products/abdb4hn5g0y0dxgdtyo6.jpg"
+            alt={ product?.name }
             className="w-[30rem] rounded"
           />
           <HeartIcon product={ product } />
