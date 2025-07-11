@@ -12,7 +12,7 @@ import {
   FaStore,
 } from "react-icons/fa";
 import { useGetTopProductsQuery } from "../../redux/api/productsApiSlice";
-import img from "../../assets/img.jpg";
+
 
 const ProductCarousel = () => {
   const { data, isLoading, error } = useGetTopProductsQuery();
@@ -31,17 +31,17 @@ const ProductCarousel = () => {
 
   return (
     <div className="mb-4 lg:block xl:block md:block mx-auto my-8">
-      {isLoading ? null : error ? (
+      { isLoading ? null : error ? (
         <Message variant="danger">
-          {error?.data?.message || error.error}
+          { error?.data?.message || error.error }
         </Message>
       ) : (
         <Slider
-          {...settings}
+          { ...settings }
           className="xl:w-[50rem]  lg:w-[50rem] md:w-[56rem] sm:w-[40rem] sm:block"
         >
-          {data?.products?.map(
-            ({
+          { data?.products?.map(
+            ( {
               image,
               _id,
               name,
@@ -53,60 +53,59 @@ const ProductCarousel = () => {
               rating,
               quantity,
               countInStock,
-            }) => (
-              <div key={_id}>
+            } ) => (
+              <div key={ _id }>
                 <img
-                  // src={image}
-                  src={img}
-                  alt={name}
+                  src={ image }
+                  alt={ name }
                   className="w-full rounded-lg object-cover h-[30rem]"
                 />
 
                 <div className="mt-4 flex justify-between">
                   <div className="one">
-                    <h2>{name}</h2>
-                    <p> $ {price}</p> <br /> <br />
+                    <h2>{ name }</h2>
+                    <p> $ { price }</p> <br /> <br />
                     <p className="w-[25rem]">
-                      {description.substring(0, 170)} ...
+                      { description.substring( 0, 170 ) } ...
                     </p>
                   </div>
 
                   <div className="flex justify-between w-[20rem]">
                     <div className="one">
                       <h1 className="flex items-center mb-6">
-                        <FaStore className="mr-2 text-white" /> Brand: {brand}
+                        <FaStore className="mr-2 text-white" /> Brand: { brand }
                       </h1>
                       <h1 className="flex items-center mb-6">
-                        <FaClock className="mr-2 text-white" /> Added:{" "}
-                        {moment(createdAt).fromNow()}
+                        <FaClock className="mr-2 text-white" /> Added:{ " " }
+                        { moment( createdAt ).fromNow() }
                       </h1>
                       <h1 className="flex items-center mb-6">
                         <FaStar className="mr-2 text-white" /> Reviews:
-                        {numReviews}
+                        { numReviews }
                       </h1>
                     </div>
 
                     <div className="two">
                       <h1 className="flex items-center mb-6">
-                        <FaStar className="mr-2 text-white" /> Ratings:{" "}
-                        {Math.round(rating)}
+                        <FaStar className="mr-2 text-white" /> Ratings:{ " " }
+                        { Math.round( rating ) }
                       </h1>
                       <h1 className="flex items-center mb-6">
-                        <FaShoppingCart className="mr-2 text-white" /> Quantity:{" "}
-                        {quantity}
+                        <FaShoppingCart className="mr-2 text-white" /> Quantity:{ " " }
+                        { quantity }
                       </h1>
                       <h1 className="flex items-center mb-6">
-                        <FaBox className="mr-2 text-white" /> In Stock:{" "}
-                        {countInStock}
+                        <FaBox className="mr-2 text-white" /> In Stock:{ " " }
+                        { countInStock }
                       </h1>
                     </div>
                   </div>
                 </div>
               </div>
             )
-          )}
+          ) }
         </Slider>
-      )}
+      ) }
     </div>
   );
 };
