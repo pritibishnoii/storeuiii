@@ -4,22 +4,13 @@ import { apiSlice } from "./apiSlice.js";
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createProduct: builder.mutation({
-      query: (productData) => ({
-        url: `${PRODUCT_URL}/`,
-        method: "POST",
-        body: productData,
-      }),
-      invalidatesTags: ["Product"],
-    }),
-
-    getProduct: builder.query({
+    getProducts: builder.query({
       query: ({ keyword }) => ({
         url: `${PRODUCT_URL}`,
         params: { keyword },
       }),
       keepUnusedDataFor: 5,
-      providesTags: ["Product"],
+      providesTags: ["Products"],
     }),
 
     getProductById: builder.query({
@@ -31,13 +22,23 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     allProducts: builder.query({
-      query: () => `${PRODUCT_URL}/allProducts`,
+      query: () => `${PRODUCT_URL}/allproducts`,
     }),
+
     getProductDetails: builder.query({
       query: (productId) => ({
         url: `${PRODUCT_URL}/${productId}`,
       }),
       keepUnusedDataFor: 5,
+    }),
+
+    createProduct: builder.mutation({
+      query: (productData) => ({
+        url: `${PRODUCT_URL}/`,
+        method: "POST",
+        body: productData,
+      }),
+      invalidatesTags: ["Product"],
     }),
 
     updateProduct: builder.mutation({
@@ -86,7 +87,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetProductByIdQuery,
-  useGetProductQuery,
+  useGetProductsQuery,
   useGetProductDetailsQuery,
   useAllProductsQuery,
   useCreateProductMutation,

@@ -14,7 +14,7 @@ import CategoryForm from "../../components/CategoryForm";
 
 const CategoryList = () => {
   const { data: categories, refetch } = useFetchCategoriesQuery();
-  console.log(categories);
+  // console.log(categories);
   const [name, setName] = useState("");
 
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -33,6 +33,7 @@ const CategoryList = () => {
     }
     try {
       const result = await createCategory({ name }).unwrap();
+      console.log(result);
       if (result.error) {
         toast.error(result.error);
       } else {

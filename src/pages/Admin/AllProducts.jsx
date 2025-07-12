@@ -8,14 +8,20 @@ import AdminMenu from "./AdminMenu";
 const AllProducts = () => {
   const { data: products, isLoading, isError, refetch } = useAllProductsQuery();
 
-  // console.log(products);
-  if (isError) {
-    return <div>Error loading products</div>;
-  }
-
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  console.log(products);
+  if (isError) {
+    return <div>Error loading products</div>;
+  }
+  if (isLoading)
+    return (
+      <div className="text-indigo-600 font-bold text-4xl mx-auto ml-[5rem]">
+        Loading..............
+      </div>
+    );
 
   return (
     <div className="mx-[9rem]">

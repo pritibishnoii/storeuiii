@@ -4,6 +4,8 @@ import { useFetchCategoriesQuery } from "../../redux/api/categoryApiSlice";
 import { useCreateProductMutation } from "../../redux/api/productsApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const ProductList = () => {
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
@@ -16,11 +18,21 @@ const ProductList = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
 
+  // Add user info check
+  const { userInfo } = useSelector((state) => state.auth);
+
   const { data: categories } = useFetchCategoriesQuery();
   const [createProduct] = useCreateProductMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Debug: Check if user is admin before submitting
+    if (!userInfo || !userInfo.isAdmin) {
+      toast.error("You must be logged in as an admin to create products");
+      return;
+    }
+
     try {
       const productData = new FormData();
       productData.append("name", name);
@@ -35,19 +47,27 @@ const ProductList = () => {
         productData.append("image", image);
       }
 
+      // Debug: Log the FormData contents
+      console.log("FormData contents:");
+      for (let [key, value] of productData.entries()) {
+        console.log(key, value);
+      }
+
       const result = await createProduct(productData);
-      console.log(result);
+      console.log("Create product result:", result);
+
       // Check if the mutation was successful
       if (result.data) {
         toast.success(`${result.data.data.name} is created`);
         navigate("/");
       } else if (result.error) {
+        console.error("Error details:", result.error);
         toast.error(
           result.error.data?.error || "Product create failed. Try Again"
         );
       }
     } catch (error) {
-      console.error(error);
+      console.error("Exception in handleSubmit:", error);
       toast.error("Product create failed. Try Again.");
     }
   };

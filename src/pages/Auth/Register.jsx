@@ -8,43 +8,41 @@ import { setCredentials } from "../../redux/features/auth/authSlice";
 
 const Register = () => {
   const { search } = useLocation();
-  const sp = new URLSearchParams( search );
-  const redirect = sp.get( "redirect" ) || "/";
-  const { userInfo } = useSelector( ( state ) => state.auth );
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+  const { userInfo } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [ username, setUserName ] = useState( "" );
-  const [ email, setEmail ] = useState( "" );
-  const [ password, setPassword ] = useState( "" );
-  const [ confirmPassword, setConfirmPassword ] = useState( "" );
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   // const r = useRegisterMutation();
   // console.log(r);
-  const [ register, { isLoading } ] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
-  useEffect( () => {
-    if ( userInfo ) {
-      navigate( redirect );
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
     }
-  }, [ navigate, redirect, userInfo ] );
+  }, [navigate, redirect, userInfo]);
 
-  const submitHandler = async ( e ) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    if ( password !== confirmPassword ) {
-      toast.error( "Passwords do not match" );
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
     } else {
       try {
-        const res = await register( { username, email, password } ).unwrap();
-        const { token, ...userData } = res;
-        dispatch( setCredentials( { ...userData }, token ) );
-        // dispatch( setCredentials( { ...res } ) );
-        toast.success( "User successfully registered" );
-        navigate( redirect );
-      } catch ( err ) {
-        console.log( err );
-        toast.error( err.data.message );
+        const res = await register({ username, email, password }).unwrap();
+        dispatch(setCredentials(res));
+        toast.success("User successfully registered");
+        navigate(redirect);
+      } catch (err) {
+        console.log(err);
+        toast.error(err.data.message);
       }
     }
   };
@@ -53,7 +51,7 @@ const Register = () => {
       <section className="pl-[10rem] flex  flex-wrap">
         <div className="mr-[4rem] mt-[5rem]">
           <h1 className="text-2xl font-semibold mb-4">Register</h1>
-          <form className="container w-[40rem]" onSubmit={ submitHandler }>
+          <form className="container w-[40rem]" onSubmit={submitHandler}>
             <div className="my-[2rem]">
               <label
                 htmlFor="name"
@@ -62,8 +60,8 @@ const Register = () => {
                 Name
               </label>
               <input
-                onChange={ ( e ) => setUserName( e.target.value ) }
-                value={ username }
+                onChange={(e) => setUserName(e.target.value)}
+                value={username}
                 type="text"
                 id="name"
                 placeholder="Enter Your Name"
@@ -79,8 +77,8 @@ const Register = () => {
                 Email
               </label>
               <input
-                onChange={ ( e ) => setEmail( e.target.value ) }
-                value={ email }
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 type="text"
                 id="email"
                 placeholder="Enter Your Email"
@@ -95,8 +93,8 @@ const Register = () => {
                 Password
               </label>
               <input
-                onChange={ ( e ) => setPassword( e.target.value ) }
-                value={ password }
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
                 type="password"
                 id="password"
                 placeholder="Enter Your Password"
@@ -111,8 +109,8 @@ const Register = () => {
                 Confirm Password
               </label>
               <input
-                onChange={ ( e ) => setConfirmPassword( e.target.value ) }
-                value={ confirmPassword }
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
                 type="password"
                 id="c-password"
                 placeholder="Enter Your  Confirm Password"
@@ -120,20 +118,20 @@ const Register = () => {
               />
             </div>
             <button
-              disabled={ isLoading }
+              disabled={isLoading}
               type="submit"
               className="bg-pink-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]"
             >
-              { isLoading ? "Registering..." : "Register" }
+              {isLoading ? "Registering..." : "Register"}
             </button>
 
-            { isLoading && <Loader /> }
+            {isLoading && <Loader />}
           </form>
           <div className="mt-4">
             <p className="text-white">
-              Already have an account?{ " " }
+              Already have an account?{" "}
               <Link
-                to={ redirect ? `/login?redirect=${ redirect }` : "/login" }
+                to={redirect ? `/login?redirect=${redirect}` : "/login"}
                 className="text-pink-500 hover:underline"
               >
                 Login

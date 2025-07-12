@@ -7,11 +7,18 @@ import cartSliceReducer from "../redux/features/cart/cartSlice";
 import shopReducer from "../redux/features/shop/shopSlice";
 import { getFavoritesFromLocalStorage } from "../utils/localStorage";
 
-const initialFavorites = getFavoritesFromLocalStorage() || [];
+const initialFavorites = (() => {
+  try {
+    return getFavoritesFromLocalStorage() || [];
+  } catch (error) {
+    console.warn("Failed to load favorites from localStorage:", error);
+    return [];
+  }
+})();
 
-const store = configureStore( {
+const store = configureStore({
   reducer: {
-    [ apiSlice.reducerPath ]: apiSlice.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
     favorites: favoritesReducer,
     cart: cartSliceReducer,
@@ -22,10 +29,10 @@ const store = configureStore( {
     favorites: initialFavorites,
   },
 
-  middleware: ( getDefaultMiddleware ) =>
-    getDefaultMiddleware().concat( apiSlice.middleware ),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
   devTools: true,
-} );
+});
 
-setupListeners( store.dispatch );
+setupListeners(store.dispatch);
 export default store;

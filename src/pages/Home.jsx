@@ -2,25 +2,25 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Header from "../components/Header";
 import { Link, useParams } from "react-router-dom";
-import { useGetProductQuery } from "../redux/api/productsApiSlice";
+import { useGetProductsQuery } from "../redux/api/productsApiSlice";
 import Product from "./Products/Product";
 
 const Home = () => {
   const { keyword } = useParams();
 
-  const { data, isLoading, isError } = useGetProductQuery( { keyword } );
+  const { data, isLoading, isError } = useGetProductsQuery({ keyword });
   // console.log(data);
-  console.log( "keyword-->", keyword );
+  console.log("keyword-->", keyword);
 
   return (
     <>
-      { !keyword ? <Header /> : null }
+      {!keyword ? <Header /> : null}
 
-      { isLoading ? (
+      {isLoading ? (
         <Loader />
       ) : isError ? (
         <Message variant="danger">
-          { isError?.data?.message || isError.error }
+          {isError?.data?.message || isError.error}
         </Message>
       ) : (
         <>
@@ -39,15 +39,15 @@ const Home = () => {
 
           <div>
             <div className="flex justify-center flex-wrap mt-[2rem]">
-              { data?.products?.map( ( product ) => (
-                <div key={ product._id }>
-                  <Product product={ product } />
+              {data?.products?.map((product) => (
+                <div key={product._id}>
+                  <Product product={product} />
                 </div>
-              ) ) }
+              ))}
             </div>
           </div>
         </>
-      ) }
+      )}
     </>
   );
 };
