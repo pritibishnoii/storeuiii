@@ -1,5 +1,4 @@
 import AdminMenu from "./AdminMenu";
-import { motion } from "motion/react";
 import Modal from "../../components/Modal";
 
 import { toast } from "react-toastify";
@@ -15,8 +14,8 @@ import CategoryForm from "../../components/CategoryForm";
 const CategoryList = () => {
   const { data: categories, refetch } = useFetchCategoriesQuery();
   // console.log(categories);
-  const [name, setName] = useState("");
 
+  const [name, setName] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [updatingName, setUpdatingName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -33,7 +32,7 @@ const CategoryList = () => {
     }
     try {
       const result = await createCategory({ name }).unwrap();
-      console.log(result);
+      // console.log(result);
       if (result.error) {
         toast.error(result.error);
       } else {
@@ -111,21 +110,16 @@ const CategoryList = () => {
         <div className="flex flex-wrap">
           {categories?.category?.map((category) => (
             <div key={category._id}>
-              <motion.button
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="bg-transparent border border-pink-500 text-pink-500 py-2 px-4 rounded m-3 hover:bg-pink-500 hover:text-white focus:outline-none foucs:ring-2 focus:ring-pink-500 focus:ring-opacity-50 cursor-pointer"
+              <button
+                className="bg-transparent border border-pink-500 text-pink-500 py-2 px-4 rounded m-3 hover:bg-pink-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 cursor-pointer transition-all duration-300"
                 onClick={() => {
-                  {
-                    setModalVisible(true);
-                    setSelectedCategory(category);
-                    setUpdatingName(category.name); // Pre-fill the input with the current name
-                  }
+                  setModalVisible(true);
+                  setSelectedCategory(category);
+                  setUpdatingName(category.name); // Pre-fill the input with the current name
                 }}
               >
                 {category.name}
-              </motion.button>
+              </button>
             </div>
           ))}
         </div>

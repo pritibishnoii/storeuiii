@@ -48,13 +48,13 @@ const ProductList = () => {
       }
 
       // Debug: Log the FormData contents
-      console.log("FormData contents:");
+      // console.log("FormData contents:");
       for (let [key, value] of productData.entries()) {
-        console.log(key, value);
+        // console.log(key, value);
       }
 
       const result = await createProduct(productData);
-      console.log("Create product result:", result);
+      // console.log("Create product result:", result);
 
       // Check if the mutation was successful
       if (result.data) {
