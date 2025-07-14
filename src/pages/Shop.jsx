@@ -83,7 +83,7 @@ const Shop = () => {
 
   return (
     <>
-      <div className="w-full max-w-screen-xl mx-auto px-2 sm:px-4">
+      <div className="w-full max-w-screen-xl mx-auto px-2 sm:px-4 mb-16">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar Filters */}
           <div className="bg-[#151515] p-3 mt-2 mb-2 rounded-lg w-full max-w-full lg:max-w-xs xl:max-w-sm">

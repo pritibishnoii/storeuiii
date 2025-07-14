@@ -22,7 +22,7 @@ const Cart = () => {
     navigate("/login?redirect=/shipping");
   };
   return (
-    <div className="w-full max-w-screen-xl mx-auto px-2 sm:px-4 mt-8">
+    <div className="w-full max-w-screen-xl mx-auto px-2 sm:px-4 mt-8 mb-[8rem]">
       {cartItems.length === 0 ? (
         <div className="text-center text-lg text-gray-300">
           Your cart is empty{" "}
