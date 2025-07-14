@@ -67,10 +67,10 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div>
+      <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mt-[3rem]">
         <Link
           to="/"
-          className="text-white font-semibold hover:underline ml-[10rem]"
+          className="text-white font-semibold hover:underline inline-block mb-4 sm:mb-6"
         >
           Go Back
         </Link>
@@ -84,102 +84,124 @@ const ProductDetails = () => {
         </Message>
       ) : (
         <>
-          <div className="flex flex-wrap relative items-between mt-[2rem] ml-[10rem]">
-            <div className="">
-              <img
-                src={products?.product?.image}
-                alt={products?.product?.name}
-                className="w-full xl:w-[50rem] lg:w-[45rem] md:w-[30rem] sm:w-[20rem] mr-[2rem]"
-              />
-
-              <HeartIcon product={products} />
-            </div>
-
-            <div className="flex flex-col justify-between">
-              <h2 className="text-2xl font-semibold">
-                {products?.product?.name}
-              </h2>
-              <p className="my-4 xl:w-[35rem] lg:w-[35rem] md:w-[30rem] text-[#B0B0B0]">
-                {products?.product?.description}
-              </p>
-
-              <p className="text-5xl my-4 font-extrabold">
-                $ {products?.product?.price}
-              </p>
-
-              <div className="flex items-center justify-between w-[20rem]">
-                <div className="one">
-                  <h1 className="flex items-center mb-6">
-                    <FaStore className="mr-2 text-white" /> Brand:{" "}
-                    {products?.product?.brand}
-                  </h1>
-                  <h1 className="flex items-center mb-6 w-[20rem]">
-                    <FaClock className="mr-2 text-white" /> Added:{" "}
-                    {moment(products?.product?.createAt).fromNow()}
-                  </h1>
-                  <h1 className="flex items-center mb-6">
-                    <FaStar className="mr-2 text-white" /> Reviews:{" "}
-                    {products?.product?.reviews?.length || 0}
-                  </h1>
-                </div>
-
-                <div className="two">
-                  <h1 className="flex items-center mb-6">
-                    <FaStar className="mr-2 text-white" /> Ratings:{" "}
-                    {products?.product?.rating}
-                  </h1>
-                  <h1 className="flex items-center mb-6">
-                    <FaShoppingCart className="mr-2 text-white" /> Quantity:{" "}
-                    {products?.product?.quantity}
-                  </h1>
-                  <h1 className="flex items-center mb-6 w-[10rem]">
-                    <FaBox className="mr-2 text-white" /> In Stock:{" "}
-                    {products?.product?.countInStock}
-                  </h1>
-                </div>
-              </div>
-
-              <div className="flex justify-between flex-wrap">
-                <Ratings
-                  value={products?.product?.rating}
-                  text={`${products?.product.numReview ?? 0} reviews`}
+          <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-12">
+              {/* Product Image Section */}
+              <div className="lg:w-1/2 xl:w-2/5 relative">
+                <img
+                  src={products?.product?.image}
+                  alt={products?.product?.name}
+                  className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] xl:h-[600px] object-cover rounded-lg shadow-lg"
                 />
-
-                {products?.product?.countInStock > 0 && (
-                  <div>
-                    <select
-                      value={qty}
-                      onChange={(e) => setQty(Number(e.target.value))}
-                      className="p-2 w-[6rem] rounded-lg text-pink-500 "
-                    >
-                      {[...Array(products?.product?.countInStock).keys()].map(
-                        (x) => (
-                          <option
-                            key={x + 1}
-                            value={x + 1}
-                            className="text-white"
-                          >
-                            {x + 1}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
-                )}
+                <HeartIcon product={products} />
               </div>
 
-              <div className="btn-container mt-5">
-                <button
-                  onClick={addToCartHandler}
-                  disabled={products?.countInStock === 0}
-                  className="bg-pink-600 text-white py-2 px-4 rounded-lg mt-4 md:mt-0 cursor-pointer"
-                >
-                  Add To Cart
-                </button>
+              {/* Product Info Section */}
+              <div className="lg:w-1/2 xl:w-3/5 flex flex-col justify-between">
+                <div>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold mb-4">
+                    {products?.product?.name}
+                  </h2>
+
+                  <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-6 leading-relaxed">
+                    {products?.product?.description}
+                  </p>
+
+                  <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-pink-600 mb-6">
+                    $ {products?.product?.price}
+                  </p>
+
+                  {/* Product Details Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center">
+                        <FaStore className="mr-3 text-pink-500 text-lg" />
+                        <span className="text-sm sm:text-base">
+                          Brand: {products?.product?.brand}
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <FaClock className="mr-3 text-pink-500 text-lg" />
+                        <span className="text-sm sm:text-base">
+                          Added: {moment(products?.product?.createAt).fromNow()}
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <FaStar className="mr-3 text-pink-500 text-lg" />
+                        <span className="text-sm sm:text-base">
+                          Reviews: {products?.product?.reviews?.length || 0}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-center">
+                        <FaStar className="mr-3 text-pink-500 text-lg" />
+                        <span className="text-sm sm:text-base">
+                          Ratings: {products?.product?.rating}
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <FaShoppingCart className="mr-3 text-pink-500 text-lg" />
+                        <span className="text-sm sm:text-base">
+                          Quantity: {products?.product?.quantity}
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <FaBox className="mr-3 text-pink-500 text-lg" />
+                        <span className="text-sm sm:text-base">
+                          In Stock: {products?.product?.countInStock}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Ratings and Quantity Selector */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <Ratings
+                      value={products?.product?.rating}
+                      text={`${products?.product.numReview ?? 0} reviews`}
+                    />
+
+                    {products?.product?.countInStock > 0 && (
+                      <div>
+                        <select
+                          value={qty}
+                          onChange={(e) => setQty(Number(e.target.value))}
+                          className="p-2 sm:p-3 w-20 sm:w-24 rounded-lg text-pink-500 bg-white border border-gray-300 focus:border-pink-500 focus:outline-none"
+                        >
+                          {[
+                            ...Array(products?.product?.countInStock).keys(),
+                          ].map((x) => (
+                            <option
+                              key={x + 1}
+                              value={x + 1}
+                              className="text-gray-800"
+                            >
+                              {x + 1}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Add to Cart Button */}
+                  <div className="mb-8">
+                    <button
+                      onClick={addToCartHandler}
+                      disabled={products?.countInStock === 0}
+                      className="w-full sm:w-auto bg-pink-600 hover:bg-pink-700 disabled:bg-gray-400 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-lg font-semibold transition-colors duration-200"
+                    >
+                      Add To Cart
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="mt-[5rem] container flex flex-wrap items-start justify-between ml-[10rem]">
+            {/* Product Tabs Section */}
+            <div className="mt-8 sm:mt-12 lg:mt-16">
               <ProductTabs
                 loadingProductReview={loadingProductReview}
                 userInfo={userInfo}

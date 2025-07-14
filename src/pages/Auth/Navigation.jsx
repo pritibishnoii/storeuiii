@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./Navigation.css";
 import {
   AiOutlineHome,
@@ -6,27 +5,23 @@ import {
   AiOutlineLogin,
   AiOutlineUserAdd,
   AiOutlineShoppingCart,
+  AiOutlineUser,
 } from "react-icons/ai";
+
 import { FaHeart, FaUserCircle } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/userSlice";
 import { logout } from "../../redux/features/auth/authSlice";
 import FavoritesCount from "../Products/FavoritesCount";
-
-const Navigation = () => {
-  const { userInfo } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.cart);
-  // const a = useLogoutMutation();
-  // console.log(a);
+import { useState } from "react";
+const DesktopNavigation = ({ cartItems, userInfo }) => {
+  const [showSidebar, setShowSidebar] = useState(false);
   const [logoutApiCall] = useLogoutMutation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);
-
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -39,14 +34,12 @@ const Navigation = () => {
       console.error(err);
     }
   };
-
   return (
     <div
       id="navigation-container"
-      className={`${
-        showSidebar ? "hidden" : "flex"
-      } xl:flex lg:flex md:hidden sm:hidden flex-col justify-between p-4  text-white bg-black w-[4%] hover:w-[15%] h-[100vh] fixed`}
-      style={{ zIndex: 999 }}
+      className={` ${
+        showSidebar ? "md:hidden" : "md:flex"
+      } xl:flex lg:flex md:hidden  flex-col justify-between p-4  text-white bg-black w-[4%] hover:w-[15%] h-[100vh] fixed  `}
     >
       <div className=" flex justify-center flex-col space-y-4 ">
         <Link
@@ -205,6 +198,159 @@ const Navigation = () => {
         </ul>
       )}
     </div>
+  );
+};
+
+const MobileNavigation = ({ userInfo, cartItems, logoutHandler }) => {
+  const [activeTab, setActiveTab] = useState("home");
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  return (
+    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black text-white z-50 border-t border-gray-800">
+      <div className="flex justify-around items-center py-3">
+        <Link
+          to="/"
+          onClick={() => setActiveTab("home")}
+          className={`flex flex-col items-center ${
+            activeTab === "home" ? "text-pink-500" : ""
+          }`}
+        >
+          <AiOutlineHome size={24} />
+          <span className="text-xs mt-1">Home</span>
+        </Link>
+
+        <Link
+          to="/shop"
+          onClick={() => setActiveTab("shop")}
+          className={`flex flex-col items-center ${
+            activeTab === "shop" ? "text-pink-500" : ""
+          }`}
+        >
+          <AiOutlineShopping size={24} />
+          <span className="text-xs mt-1">Shop</span>
+        </Link>
+
+        <Link
+          to="/cart"
+          onClick={() => setActiveTab("cart")}
+          className={`flex flex-col items-center relative ${
+            activeTab === "cart" ? "text-pink-500" : ""
+          }`}
+        >
+          <AiOutlineShoppingCart size={24} />
+          {cartItems.length > 0 && (
+            <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-xs text-white bg-pink-500 rounded-full">
+              {cartItems.reduce((a, c) => a + c.qty, 0)}
+            </span>
+          )}
+          <span className="text-xs mt-1">Cart</span>
+        </Link>
+
+        <Link
+          to="/favorite"
+          onClick={() => setActiveTab("favorite")}
+          className={`flex flex-col items-center relative ${
+            activeTab === "favorite" ? "text-pink-500" : ""
+          }`}
+        >
+          <FaHeart size={24} />
+          <FavoritesCount />
+          <span className="text-xs mt-1">Favorites</span>
+        </Link>
+
+        {userInfo ? (
+          <div className="relative">
+            <button
+              onClick={() => setShowUserMenu(!showUserMenu)}
+              className={`flex flex-col items-center ${
+                activeTab === "user" ? "text-pink-500" : ""
+              }`}
+            >
+              <AiOutlineUser size={24} />
+              <span className="text-xs mt-1">Account</span>
+            </button>
+
+            {showUserMenu && (
+              <div className="absolute bottom-full right-0 mb-2 w-48 bg-white rounded shadow-lg text-black p-2">
+                {userInfo.isAdmin && (
+                  <>
+                    <Link
+                      to="/admin/dashboard"
+                      onClick={() => setShowUserMenu(false)}
+                      className="block px-4 py-2 hover:bg-gray-100 rounded"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      to="/profile"
+                      onClick={() => setShowUserMenu(false)}
+                      className="block px-4 py-2 hover:bg-gray-100 rounded"
+                    >
+                      Profile
+                    </Link>
+                  </>
+                )}
+                <button
+                  onClick={() => {
+                    logoutHandler();
+                    setShowUserMenu(false);
+                  }}
+                  className="block w-full px-4 py-2 text-left hover:bg-gray-100 rounded"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            onClick={() => setActiveTab("login")}
+            className={`flex flex-col items-center ${
+              activeTab === "login" ? "text-pink-500" : ""
+            }`}
+          >
+            <AiOutlineLogin size={24} />
+            <span className="text-xs mt-1">Login</span>
+          </Link>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const Navigation = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
+  const [logoutApiCall] = useLogoutMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <>
+      <div className="hidden md:block">
+        <DesktopNavigation
+          userInfo={userInfo}
+          cartItems={cartItems}
+          logoutHandler={logoutHandler}
+        />
+      </div>
+      <MobileNavigation
+        userInfo={userInfo}
+        cartItems={cartItems}
+        logoutHandler={logoutHandler}
+      />
+    </>
   );
 };
 

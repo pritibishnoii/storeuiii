@@ -16,11 +16,12 @@ const Header = () => {
 
   return (
     <>
-      <div className="flex justify-around flex-col mx-auto">
-        <div className="xl:block lg:hidden md:hidden sm:hidden ml-[5rem] my-8">
-          <div className="grid grid-cols-2">
+      <div className="w-full max-w-screen-xl mx-auto px-2 sm:px-4 flex flex-col gap-8 mt-0">
+        {/* Responsive Product Grid */}
+        <div className="my-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {data?.products?.map((product) => (
-              <div key={product._id}>
+              <div key={product._id} className="flex justify-center">
                 <SmallProducts product={product} />
               </div>
             ))}
