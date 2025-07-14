@@ -66,7 +66,7 @@ const ProductTabs = ({
       {/* Tab Content */}
       <section className="flex-1">
         {activeTab === 1 && (
-          <div className="mt-4 lg:mt-0">
+          <div className="mt-4 lg:mt-0 mb-[5rem]">
             {userInfo ? (
               <form onSubmit={submitHandler} className="space-y-4">
                 <div>
@@ -137,7 +137,7 @@ const ProductTabs = ({
         )}
 
         {activeTab === 2 && (
-          <div className="mt-4 lg:mt-0">
+          <div className="mt-4 lg:mt-0 mb-[8rem]">
             {products?.product?.reviews?.length === 0 ? (
               <div className="text-center py-8">
                 <p className="text-lg text-gray-400">No Reviews</p>
@@ -174,7 +174,7 @@ const ProductTabs = ({
             {!data.products ? (
               <Loader />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 mb-14">
                 {data?.products?.map((product) => (
                   <div key={product._id} className="flex justify-center">
                     <SmallProducts product={product} />

@@ -204,6 +204,8 @@ const DesktopNavigation = ({ cartItems, userInfo }) => {
 const MobileNavigation = ({ userInfo, cartItems, logoutHandler }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const favorites = useSelector((state) => state.favorites);
+  const favoriteCount = favorites.length;
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black text-white z-50 border-t border-gray-800">
@@ -239,7 +241,7 @@ const MobileNavigation = ({ userInfo, cartItems, logoutHandler }) => {
         >
           <AiOutlineShoppingCart size={24} />
           {cartItems.length > 0 && (
-            <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-xs text-white bg-pink-500 rounded-full">
+            <span className="absolute -top-3 -right-2 px-1.5 py-0.5 text-xs text-white bg-pink-500 rounded-full">
               {cartItems.reduce((a, c) => a + c.qty, 0)}
             </span>
           )}
@@ -254,7 +256,13 @@ const MobileNavigation = ({ userInfo, cartItems, logoutHandler }) => {
           }`}
         >
           <FaHeart size={24} />
-          <FavoritesCount />
+          <div className="absolute right-1 -top-3">
+            {favoriteCount > 0 && (
+              <span className="px-1 py-0 text-sm text-white bg-pink-500 rounded-full">
+                {favoriteCount}
+              </span>
+            )}
+          </div>
           <span className="text-xs mt-1">Favorites</span>
         </Link>
 
