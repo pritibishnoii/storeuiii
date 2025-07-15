@@ -1,13 +1,70 @@
-# React + Vite
-FRONTENDURL=https://storeuiii.vercel.app/
+# 🛍️ StoreUI – Full Stack E-Commerce App -QuickKart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Demo**:(https://storeuiii.vercel.app)
 
-Currently, two official plugins are available:
+This is a **full-stack E-Commerce web application** built using **React + Vite** on the frontend and **Node.js + Express.js** on the backend, with **Redux Toolkit (RTK)** for state management. It features modern UI design, responsive layout, product listing, cart management, user authentication, and more.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🔧 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🚀 Frontend
+- React (with Vite for blazing-fast builds)
+- Redux Toolkit (RTK)
+- React Router
+- Tailwind CSS / Custom CSS Modules
+- RTK Query
+- React Toastify
+- ESLint + Prettier
+- motion
+
+### 🛠️ Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT (JSON Web Tokens)
+- Bcrypt (Password Hashing)
+- CORS, dotenv
+- Cloudinary
+
+---
+
+## 📁 Folder Structure
+storeui/
+├── server/ # Backend code (Express API)
+│ ├── controllers/ # Route logic
+│ ├── models/ # Mongoose models
+│ ├── routes/ # API routes
+│ ├── middleware/ # Custom middleware (auth, error handlers)
+│ ├── config/ # MongoDB connection
+│ └── server.js # Entry point
+│
+└── client/ # Frontend code (React + Vite)
+├── public/
+├── src/
+│ ├── components/ # Reusable components
+│ ├── pages/ # Page-level components
+│ ├── redux/ # Redux slices and store
+│ ├── hooks/ # Custom React hooks
+│ ├── App.jsx
+│ └── main.jsx
+└── vite.config.js
+
+
+## ⚙️ Features
+
+- ✅ User Authentication (Login / Signup)
+- ✅ Product List & Details Page
+- ✅ Add to Cart, Remove, and Update Quantity
+- ✅ JWT-secured APIs
+- ✅ Responsive & Mobile Friendly UI
+- ✅ Global state with Redux Toolkit
+- ✅ Toast Notification System
+- ✅ ESLint & Prettier Configured
+- ✅ Hot Module Replacement (HMR) with Vite
+
+- ✅ Payment Gateway Integration (Stripe/Razorpay)
+- ✅ Admin Dashboard
+- ✅ Product Review
+- ✅ Order Management System
+
